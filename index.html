@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Canva AI ハンズオンセミナー 第3回 | NotebookLM × Canva 図解マスター講座</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        primary: "#00C4CC",
+        "primary-dark": "#00A3A9",
+        secondary: "#7D2AE8",
+        accent: "#FFFF80",
+        lavender: "#C9ACE6",
+        "background-light": "#FAFAF8",
+        "background-dark": "#2D2B3D",
+      },
+      fontFamily: {
+        display: ["Inter", "Noto Sans JP", "sans-serif"],
+        sans: ["Inter", "Noto Sans JP", "sans-serif"],
+      },
+    },
+  },
+};
+</script>
+<style>
+body { font-family: 'Inter', 'Noto Sans JP', sans-serif; }
+.hero-gradient {
+  background: linear-gradient(135deg, #7D2AE8 0%, #00C4CC 100%);
+}
+.copy-btn {
+  transition: all 0.2s;
+}
+.copy-btn:hover {
+  transform: scale(1.05);
+}
+.copy-btn.copied {
+  background: #10B981 !important;
+}
+.prompt-box {
+  background: #1e1e1e;
+  border-radius: 0.75rem;
+  position: relative;
+}
+.prompt-box pre {
+  color: #e2e8f0;
+  font-family: 'Noto Sans JP', monospace;
+  font-size: 14px;
+  line-height: 1.8;
+  padding: 1.25rem;
+  padding-right: 4rem;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.step-number {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: #00C4CC;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+</style>
+</head>
+<body class="bg-background-light text-slate-800">
+
+<!-- Header -->
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+<div class="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+  <div class="flex items-center space-x-2">
+    <span class="material-icons-outlined text-primary text-2xl">auto_awesome</span>
+    <span class="font-bold text-lg tracking-tight">Canva AI ハンズオン</span>
+  </div>
+  <nav class="flex items-center space-x-4 text-sm font-medium">
+    <a class="hover:text-primary transition-colors hidden sm:block" href="#flow">流れ</a>
+    <a class="hover:text-primary transition-colors hidden sm:block" href="#part-1">特徴</a>
+    <a class="hover:text-primary transition-colors hidden sm:block" href="#part-2">セットアップ</a>
+    <a class="hover:text-primary transition-colors hidden sm:block" href="#part-3">プロンプト</a>
+    <a class="hover:text-primary transition-colors hidden sm:block" href="#part-canva">Canva</a>
+    <a class="hover:text-primary transition-colors" href="#data">配布データ</a>
+  </nav>
+</div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero-gradient py-16 lg:py-24 text-white">
+<div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
+  <p class="font-bold tracking-widest uppercase mb-3 text-sm text-white/90">Canva AI ハンズオンセミナー 第3回</p>
+  <h1 class="text-3xl md:text-5xl font-extrabold mb-4 leading-tight">
+    NotebookLM x Canva<br/>図解マスター講座
+  </h1>
+  <p class="text-xl md:text-2xl font-bold text-white/90 mb-2">AIで「ザ、図解！」を15分で作る方法</p>
+  <p class="max-w-2xl mx-auto text-base text-white/90 mb-8 leading-relaxed">
+    テイストもカラーも自由自在。<br class="hidden sm:block"/>
+    「設計図」を渡すだけで、プロ品質の図解が作れるようになります。
+  </p>
+
+  <!-- Flow Diagram -->
+  <div class="mt-8 max-w-4xl mx-auto">
+    <div class="bg-white/10 backdrop-blur rounded-2xl p-6 border border-white/20">
+      <div class="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4">
+        <div class="bg-white rounded-xl p-4 text-center min-w-[140px]">
+          <span class="material-icons-outlined text-3xl mb-2 text-primary">description</span>
+          <p class="text-sm font-bold text-slate-700">1. 設計図を仕込む</p>
+        </div>
+        <span class="material-icons-outlined text-xl rotate-90 md:rotate-0 text-white">arrow_forward</span>
+        <div class="bg-white rounded-xl p-4 text-center min-w-[140px]">
+          <span class="material-icons-outlined text-3xl mb-2 text-primary">chat</span>
+          <p class="text-sm font-bold text-slate-700">2. 1行で図解生成</p>
+        </div>
+        <span class="material-icons-outlined text-xl rotate-90 md:rotate-0 text-white">arrow_forward</span>
+        <div class="bg-white rounded-xl p-4 text-center min-w-[140px] border-2 border-accent">
+          <span class="material-icons-outlined text-3xl mb-2 text-secondary">auto_fix_high</span>
+          <p class="text-sm font-bold text-slate-700">3. Canvaで仕上げ</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Before/After Section -->
+<section class="py-16 max-w-5xl mx-auto px-4 sm:px-6">
+<div class="text-center mb-10">
+  <p class="text-sm font-bold text-[#0369A1] tracking-widest uppercase mb-2">Today's Goal</p>
+  <h2 class="text-2xl font-bold mb-3">今日のゴール</h2>
+  <p class="text-slate-500">違いはたった1つ、「設計図」を渡したかどうか</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div class="bg-slate-100 border-2 border-slate-300 rounded-2xl p-6">
+    <div class="flex items-center gap-2 mb-4">
+      <span class="bg-slate-500 text-white px-3 py-1 rounded-full text-sm font-bold">Before</span>
+    </div>
+    <ul class="space-y-3 text-slate-700">
+      <li class="flex items-start gap-2">
+        <span class="material-icons-outlined text-slate-400 text-lg mt-0.5">close</span>
+        <span>AIに「図解して」と言ったら謎のイラストが出てきた</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="material-icons-outlined text-slate-400 text-lg mt-0.5">close</span>
+        <span>デザインがごちゃっとしていて使えない</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="material-icons-outlined text-slate-400 text-lg mt-0.5">close</span>
+        <span>テイストやカラーが毎回バラバラ</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="material-icons-outlined text-slate-400 text-lg mt-0.5">close</span>
+        <span>図解のあとの編集ができない</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="bg-primary/10 border-2 border-primary/30 rounded-2xl p-6">
+    <div class="flex items-center gap-2 mb-4">
+      <span class="bg-primary text-white px-3 py-1 rounded-full text-sm font-bold">After</span>
+    </div>
+    <ul class="space-y-3 text-slate-700">
+      <li class="flex items-start gap-2">
+        <span class="material-icons-outlined text-primary text-lg mt-0.5">check_circle</span>
+        <span>「ザ、図解！」なプロ品質のデザインが出る</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="material-icons-outlined text-primary text-lg mt-0.5">check_circle</span>
+        <span>テイスト・カラー・型を自由にコントロール</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="material-icons-outlined text-primary text-lg mt-0.5">check_circle</span>
+        <span>チャットで1行指示するだけで図解が完成</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="material-icons-outlined text-primary text-lg mt-0.5">check_circle</span>
+        <span>Canvaのマジックレイヤーで個別編集も可能</span>
+      </li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<!-- Today's Flow Section -->
+<section class="py-16 bg-white" id="flow">
+<div class="max-w-5xl mx-auto px-4 sm:px-6">
+  <div class="text-center mb-10">
+    <p class="text-sm font-bold text-[#0369A1] tracking-widest uppercase mb-2">Flow</p>
+    <h2 class="text-2xl font-bold mb-3">今日の流れ</h2>
+    <p class="text-slate-500">3ステップで「ザ、図解！」を量産する仕組みを手に入れる</p>
+  </div>
+
+  <div class="space-y-6">
+    <div class="flex items-start gap-4 bg-primary/5 rounded-2xl p-6 border border-primary/20">
+      <div class="step-number">1</div>
+      <div>
+        <h3 class="font-bold text-lg mb-1">NotebookLMに「設計図」を仕込む</h3>
+        <p class="text-slate-600 text-sm">デザインルールをソースに追加 + カスタム指示を設定するだけ（メインパート）</p>
+      </div>
+    </div>
+
+    <div class="flex items-start gap-4 bg-primary/5 rounded-2xl p-6 border border-primary/20">
+      <div class="step-number">2</div>
+      <div>
+        <h3 class="font-bold text-lg mb-1">チャットで1行指示して図解を生成</h3>
+        <p class="text-slate-600 text-sm">テイスト・カラー・型を指定して、1行でプロ品質の図解が出る</p>
+      </div>
+    </div>
+
+    <div class="flex items-start gap-4 bg-primary/5 rounded-2xl p-6 border border-primary/20">
+      <div class="step-number">3</div>
+      <div>
+        <h3 class="font-bold text-lg mb-1">Canvaのマジックレイヤーで仕上げる</h3>
+        <p class="text-slate-600 text-sm">画像を分解して個別編集 → プロ品質の最終仕上げ</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Part 1: NotebookLM とは -->
+<section class="py-16 bg-lavender/5" id="part-1">
+<div class="max-w-5xl mx-auto px-4 sm:px-6">
+  <div class="text-center mb-10">
+    <span class="bg-secondary/10 text-secondary px-4 py-1 rounded-full text-sm font-bold">Part 1</span>
+    <h2 class="text-2xl font-bold mt-3 mb-2">NotebookLMとは</h2>
+    <p class="text-slate-500">Googleが提供する、ソース特化型AIリサーチツール</p>
+  </div>
+
+  <!-- What is NotebookLM -->
+  <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm mb-8">
+    <div class="flex items-start gap-4">
+      <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center flex-shrink-0">
+        <span class="material-icons-outlined text-2xl">science</span>
+      </div>
+      <div>
+        <h3 class="font-bold text-lg mb-2">Google が作ったAIリサーチツール</h3>
+        <p class="text-slate-600 text-sm leading-relaxed mb-3">
+          NotebookLMは、Googleが提供する<strong>無料の</strong>AIツールです。自分が入れたソース（資料）だけを根拠に回答してくれるのが最大の特徴。ChatGPTやGeminiのように「ネットの知識」で答えるのではなく、<strong>あなたが渡した情報だけの世界</strong>で動きます。
+        </p>
+        <a href="https://notebooklm.google.com/" target="_blank" class="inline-flex items-center gap-1 text-[#0369A1] text-sm font-bold hover:underline">
+          <span class="material-icons-outlined text-base">open_in_new</span>
+          notebooklm.google.com
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 Features -->
+  <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+    <span class="material-icons-outlined text-secondary">star</span>
+    3つの特徴（これだけ覚えて帰ってください）
+  </h3>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+    <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm text-center">
+      <div class="w-14 h-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
+        <span class="material-icons-outlined text-3xl">verified</span>
+      </div>
+      <h3 class="font-bold text-lg mb-2">嘘をつかない</h3>
+      <p class="text-slate-600 text-sm">ハルシネーション（幻覚）を抑制。ソースにない情報を勝手に作らない</p>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm text-center">
+      <div class="w-14 h-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
+        <span class="material-icons-outlined text-3xl">menu_book</span>
+      </div>
+      <h3 class="font-bold text-lg mb-2">読み飛ばさない</h3>
+      <p class="text-slate-600 text-sm">大量のPDFでも内容を網羅的に読み取る。ChatGPTは途中を読み飛ばすことがある</p>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm text-center">
+      <div class="w-14 h-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
+        <span class="material-icons-outlined text-3xl">lock</span>
+      </div>
+      <h3 class="font-bold text-lg mb-2">情報の聖域</h3>
+      <p class="text-slate-600 text-sm">入れたソースだけを根拠にする。外部の情報を混ぜない「閉じた世界」</p>
+    </div>
+  </div>
+
+  <!-- Source Types -->
+  <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+    <span class="material-icons-outlined text-secondary">upload_file</span>
+    ソースに入れられるもの
+  </h3>
+  <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-4">
+    <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm flex items-center gap-3">
+      <span class="material-icons-outlined text-primary text-xl">picture_as_pdf</span>
+      <div>
+        <p class="font-bold text-sm">PDF</p>
+        <p class="text-xs text-slate-500">画像・グラフも理解</p>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm flex items-center gap-3">
+      <span class="material-icons-outlined text-primary text-xl">text_snippet</span>
+      <div>
+        <p class="font-bold text-sm">.txt / .md / .docx</p>
+        <p class="text-xs text-slate-500">テキスト系ファイル</p>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm flex items-center gap-3">
+      <span class="material-icons-outlined text-primary text-xl">language</span>
+      <div>
+        <p class="font-bold text-sm">WebサイトURL</p>
+        <p class="text-xs text-slate-500">記事、ブログ等</p>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm flex items-center gap-3">
+      <span class="material-icons-outlined text-primary text-xl">play_circle</span>
+      <div>
+        <p class="font-bold text-sm">YouTube URL</p>
+        <p class="text-xs text-slate-500">字幕をテキスト化</p>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm flex items-center gap-3">
+      <span class="material-icons-outlined text-primary text-xl">description</span>
+      <div>
+        <p class="font-bold text-sm">Googleドキュメント</p>
+        <p class="text-xs text-slate-500">ドライブ連携</p>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm flex items-center gap-3">
+      <span class="material-icons-outlined text-primary text-xl">slideshow</span>
+      <div>
+        <p class="font-bold text-sm">Googleスライド</p>
+        <p class="text-xs text-slate-500">同期機能あり</p>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm flex items-center gap-3">
+      <span class="material-icons-outlined text-primary text-xl">table_chart</span>
+      <div>
+        <p class="font-bold text-sm">スプレッドシート</p>
+        <p class="text-xs text-slate-500">10万トークン制限</p>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm flex items-center gap-3">
+      <span class="material-icons-outlined text-primary text-xl">image</span>
+      <div>
+        <p class="font-bold text-sm">画像</p>
+        <p class="text-xs text-slate-500">手書きノート等も</p>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm flex items-center gap-3">
+      <span class="material-icons-outlined text-primary text-xl">mic</span>
+      <div>
+        <p class="font-bold text-sm">音声ファイル</p>
+        <p class="text-xs text-slate-500">mp3, wav, m4a等</p>
+      </div>
+    </div>
+  </div>
+  <div class="bg-primary/5 rounded-xl p-4 border border-primary/20 mb-10 flex items-center gap-3">
+    <span class="material-icons-outlined text-primary">content_paste</span>
+    <div>
+      <p class="font-bold text-sm">コピーしたテキスト <span class="text-primary font-normal">← 今日はこれを使います</span></p>
+      <p class="text-xs text-slate-500">テキストを直接貼り付けてソースに追加。1ノートブック最大50ソース（Plus版は300）</p>
+    </div>
+  </div>
+
+  <!-- What you can do -->
+  <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+    <span class="material-icons-outlined text-secondary">auto_awesome</span>
+    できること
+  </h3>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="material-icons-outlined text-primary">chat</span>
+        <h4 class="font-bold">チャットで質問</h4>
+      </div>
+      <p class="text-slate-600 text-sm">ソースの内容について何でも質問できる。回答には必ず引用元が付く</p>
+    </div>
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="material-icons-outlined text-primary">account_tree</span>
+        <h4 class="font-bold">マインドマップ生成</h4>
+      </div>
+      <p class="text-slate-600 text-sm">ソース全体の構造を視覚化。リサーチの全体像把握に便利</p>
+    </div>
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="material-icons-outlined text-primary">slideshow</span>
+        <h4 class="font-bold">スライド自動生成</h4>
+      </div>
+      <p class="text-slate-600 text-sm">ソースからプレゼン資料を自動生成（最大15枚）</p>
+    </div>
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm border-2 border-primary/30 bg-primary/5">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="material-icons-outlined text-primary">insert_chart</span>
+        <h4 class="font-bold text-primary">インフォグラフィック</h4>
+      </div>
+      <p class="text-slate-600 text-sm">ソースから図解を自動生成。<strong>今日のメインテーマ</strong></p>
+    </div>
+  </div>
+
+  <!-- Use Cases -->
+  <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+    <span class="material-icons-outlined text-secondary">work</span>
+    こんな場面で使える
+  </h3>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+    <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm flex items-start gap-3">
+      <span class="material-icons-outlined text-primary mt-0.5">search</span>
+      <div>
+        <p class="font-bold text-sm">リサーチ・情報整理</p>
+        <p class="text-xs text-slate-500">大量の資料を投入して横断検索。「あの資料のどこに書いてあったっけ？」が一発</p>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm flex items-start gap-3">
+      <span class="material-icons-outlined text-primary mt-0.5">gavel</span>
+      <div>
+        <p class="font-bold text-sm">議事録の「言った言わない」追跡</p>
+        <p class="text-xs text-slate-500">会議の音声や議事録を入れて、誰が何を言ったか検索</p>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm flex items-start gap-3">
+      <span class="material-icons-outlined text-primary mt-0.5">build</span>
+      <div>
+        <p class="font-bold text-sm">マニュアルの逆引き辞書</p>
+        <p class="text-xs text-slate-500">家電や業務マニュアルのPDFを入れて「エラーコードE3の対処法は？」</p>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm flex items-start gap-3">
+      <span class="material-icons-outlined text-primary mt-0.5">school</span>
+      <div>
+        <p class="font-bold text-sm">学習・資格勉強</p>
+        <p class="text-xs text-slate-500">教科書や参考書を入れてAI家庭教師に。試験対策にも</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Insight -->
+  <div class="bg-accent/10 border-2 border-accent rounded-2xl p-6">
+    <h4 class="font-bold text-lg mb-3 flex items-center gap-2">
+      <span class="material-icons-outlined text-yellow-600">lightbulb</span>
+      今日のキモ
+    </h4>
+    <p class="text-slate-700 leading-relaxed">
+      NotebookLMは<strong>「何を入れるか」が9割</strong>。質問の仕方より、ソースの質と種類で出力が決まります。<br/>
+      今日は<strong>「デザインの設計図」をソースに入れます</strong>。これだけで図解のクオリティが劇的に変わります。
+    </p>
+  </div>
+</div>
+</section>
+
+<!-- Part 2: Setup -->
+<section class="py-16 bg-white" id="part-2">
+<div class="max-w-5xl mx-auto px-4 sm:px-6">
+  <div class="text-center mb-10">
+    <span class="bg-secondary/10 text-secondary px-4 py-1 rounded-full text-sm font-bold">Part 2</span>
+    <h2 class="text-2xl font-bold mt-3 mb-2">デザインの「設計図」を仕込む</h2>
+    <p class="text-slate-500">3ステップのセットアップで準備完了</p>
+  </div>
+
+  <!-- How it works -->
+  <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 mb-10">
+    <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+      <span class="material-icons-outlined text-[#0369A1]">schema</span>
+      仕組み
+    </h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl p-5 border border-slate-200">
+        <p class="text-sm font-bold text-slate-400 mb-2">通常のNotebookLM</p>
+        <div class="space-y-2 text-sm text-slate-600">
+          <p class="flex items-center gap-2"><span class="material-icons-outlined text-slate-400 text-base">description</span> ソース（記事など）</p>
+          <p class="flex items-center gap-2"><span class="material-icons-outlined text-slate-400 text-base">arrow_downward</span> チャットで指示</p>
+          <p class="flex items-center gap-2"><span class="material-icons-outlined text-red-400 text-base">close</span> <strong>デザインはAI任せ = ごちゃっとする</strong></p>
+        </div>
+      </div>
+      <div class="bg-primary/5 rounded-xl p-5 border-2 border-primary/30">
+        <p class="text-sm font-bold text-primary mb-2">設計図を入れたNotebookLM</p>
+        <div class="space-y-2 text-sm text-slate-700">
+          <p class="flex items-center gap-2"><span class="material-icons-outlined text-primary text-base">description</span> ソース（記事など）</p>
+          <p class="flex items-center gap-2"><span class="material-icons-outlined text-secondary text-base">add_circle</span> <strong>ソース（デザイン設計ルール）</strong></p>
+          <p class="flex items-center gap-2"><span class="material-icons-outlined text-secondary text-base">add_circle</span> <strong>カスタム指示（自動で設計図を使う）</strong></p>
+          <p class="flex items-center gap-2"><span class="material-icons-outlined text-primary text-base">check_circle</span> <strong>テイスト・カラー・型がコントロールされた図解</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Steps -->
+  <div class="space-y-6">
+    <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="step-number">1</div>
+        <h4 class="font-bold text-lg">設計ルールをソースに追加</h4>
+      </div>
+      <div class="ml-[3.25rem] space-y-2 text-sm text-slate-600">
+        <p>1. このページ下部の<a href="#data" class="text-[#0369A1] font-bold hover:underline">配布データ</a>から <strong>source_yaml-design-rules.txt</strong> の内容をコピー</p>
+        <p>2. 「ソースを追加」→「コピーしたテキスト」で貼り付け</p>
+        <p>3. ソース一覧に「図解デザインYAML設計ルール」が出ればOK</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="step-number">2</div>
+        <h4 class="font-bold text-lg">カスタム指示を設定</h4>
+      </div>
+      <div class="ml-[3.25rem] space-y-2 text-sm text-slate-600">
+        <p>1. 左下「ノートブックのカスタマイズ」（歯車アイコン）を開く</p>
+        <p>2. 「チャットのカスタム指示」欄に、<a href="#data" class="text-[#0369A1] font-bold hover:underline">配布データ</a>から <strong>chat-custom-instruction.txt</strong> の内容を貼り付け</p>
+        <p>3. 保存</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="step-number">3</div>
+        <h4 class="font-bold text-lg">本題のソースを追加</h4>
+      </div>
+      <div class="ml-[3.25rem] space-y-2 text-sm text-slate-600">
+        <p>1. 図解にしたい記事のURL、またはテキストをソースに追加</p>
+        <p>2. ソース一覧に「デザイン設計ルール」と「本題の記事」の2つがあることを確認</p>
+        <p class="text-primary font-bold">これで準備完了です！</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Part 3: Prompt Collection -->
+<section class="py-16 bg-lavender/5" id="part-3">
+<div class="max-w-5xl mx-auto px-4 sm:px-6">
+  <div class="text-center mb-10">
+    <span class="bg-secondary/10 text-secondary px-4 py-1 rounded-full text-sm font-bold">Part 3</span>
+    <h2 class="text-2xl font-bold mt-3 mb-2">使えるプロンプト集</h2>
+    <p class="text-slate-500">チャット欄にコピペするだけで、デザインが変わります</p>
+  </div>
+
+  <div class="space-y-4">
+    <!-- Default -->
+    <div>
+      <p class="text-sm font-bold text-slate-500 mb-2 flex items-center gap-1">
+        <span class="material-icons-outlined text-base">star</span>
+        デフォルト（ビジネスブルー）
+      </p>
+      <div class="prompt-box">
+        <button onclick="copyPrompt(this, 'prompt-1')" class="copy-btn absolute top-3 right-3 bg-primary hover:bg-primary-dark text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1 z-10">
+          <span class="material-icons-outlined text-base">content_copy</span>
+          コピー
+        </button>
+        <pre id="prompt-1">この内容をインフォグラフィックにして</pre>
+      </div>
+    </div>
+
+    <!-- Cool -->
+    <div>
+      <p class="text-sm font-bold text-slate-500 mb-2 flex items-center gap-1">
+        <span class="material-icons-outlined text-base">devices</span>
+        テイスト指定
+      </p>
+      <div class="prompt-box">
+        <button onclick="copyPrompt(this, 'prompt-2')" class="copy-btn absolute top-3 right-3 bg-primary hover:bg-primary-dark text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1 z-10">
+          <span class="material-icons-outlined text-base">content_copy</span>
+          コピー
+        </button>
+        <pre id="prompt-2">この内容をインフォグラフィックにして。テイストはクールで</pre>
+      </div>
+    </div>
+
+    <!-- Color -->
+    <div>
+      <p class="text-sm font-bold text-slate-500 mb-2 flex items-center gap-1">
+        <span class="material-icons-outlined text-base">palette</span>
+        キーカラー指定
+      </p>
+      <div class="prompt-box">
+        <button onclick="copyPrompt(this, 'prompt-3')" class="copy-btn absolute top-3 right-3 bg-primary hover:bg-primary-dark text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1 z-10">
+          <span class="material-icons-outlined text-base">content_copy</span>
+          コピー
+        </button>
+        <pre id="prompt-3">この内容をインフォグラフィックにして。キーカラーは#FF5757で</pre>
+      </div>
+    </div>
+
+    <!-- Type -->
+    <div>
+      <p class="text-sm font-bold text-slate-500 mb-2 flex items-center gap-1">
+        <span class="material-icons-outlined text-base">grid_view</span>
+        型の指定
+      </p>
+      <div class="prompt-box">
+        <button onclick="copyPrompt(this, 'prompt-4')" class="copy-btn absolute top-3 right-3 bg-primary hover:bg-primary-dark text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1 z-10">
+          <span class="material-icons-outlined text-base">content_copy</span>
+          コピー
+        </button>
+        <pre id="prompt-4">この内容をリスト型のインフォグラフィックにして</pre>
+      </div>
+    </div>
+
+    <!-- Combo -->
+    <div>
+      <p class="text-sm font-bold text-slate-500 mb-2 flex items-center gap-1">
+        <span class="material-icons-outlined text-base">auto_awesome</span>
+        テイスト + カラー 組み合わせ
+      </p>
+      <div class="prompt-box">
+        <button onclick="copyPrompt(this, 'prompt-5')" class="copy-btn absolute top-3 right-3 bg-primary hover:bg-primary-dark text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1 z-10">
+          <span class="material-icons-outlined text-base">content_copy</span>
+          コピー
+        </button>
+        <pre id="prompt-5">この内容をインフォグラフィックにして。和風で、キーカラーは藍色で</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tip -->
+  <div class="mt-8 bg-accent/10 border-2 border-accent rounded-2xl p-6">
+    <h4 class="font-bold mb-2 flex items-center gap-2">
+      <span class="material-icons-outlined text-yellow-600">tips_and_updates</span>
+      組み合わせのコツ
+    </h4>
+    <p class="text-slate-700 text-sm leading-relaxed">
+      <strong>テイスト</strong>（雰囲気）、<strong>カラー</strong>（色）、<strong>型</strong>（レイアウト）の3つを組み合わせるだけで、無限にデザインが変わります。まずはデフォルトで試して、そこからテイストやカラーを変えていくのがおすすめです。
+    </p>
+  </div>
+</div>
+</section>
+
+<!-- Part 4: Taste List -->
+<section class="py-16 bg-white" id="part-taste">
+<div class="max-w-5xl mx-auto px-4 sm:px-6">
+  <div class="text-center mb-10">
+    <span class="bg-secondary/10 text-secondary px-4 py-1 rounded-full text-sm font-bold">Part 4</span>
+    <h2 class="text-2xl font-bold mt-3 mb-2">テイスト一覧</h2>
+    <p class="text-slate-500">プロンプトに「テイストは○○で」と添えるだけで切り替わります</p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+    <!-- Default -->
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background:#0571DD;">
+          <span class="material-icons-outlined text-white">business</span>
+        </div>
+        <div>
+          <h4 class="font-bold">デフォルト</h4>
+          <p class="text-xs text-slate-500">指定なしの場合</p>
+        </div>
+      </div>
+      <p class="text-sm text-slate-600 mb-3">ビジネスブルー (#0571DD)。クリーンでプロフェッショナルなデザイン</p>
+      <div class="prompt-box"><button onclick="copyPrompt(this, 'taste-default')" class="copy-btn absolute top-2 right-2 bg-primary hover:bg-primary-dark text-white px-2 py-1 rounded-lg text-xs font-medium flex items-center gap-1 z-10"><span class="material-icons-outlined text-sm">content_copy</span>コピー</button><pre id="taste-default" class="!text-xs !py-2 !px-3 !pr-16">この内容をインフォグラフィックにして</pre></div>
+    </div>
+
+    <!-- Cool -->
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background:#0A1628;">
+          <span class="material-icons-outlined" style="color:#00D4FF;">memory</span>
+        </div>
+        <div>
+          <h4 class="font-bold">クール / テック系</h4>
+          <p class="text-xs text-slate-500">先進的、テクニカル</p>
+        </div>
+      </div>
+      <p class="text-sm text-slate-600 mb-3">ダークネイビー背景にシアンのアクセント。IT・テクノロジー向け</p>
+      <div class="prompt-box"><button onclick="copyPrompt(this, 'taste-cool')" class="copy-btn absolute top-2 right-2 bg-primary hover:bg-primary-dark text-white px-2 py-1 rounded-lg text-xs font-medium flex items-center gap-1 z-10"><span class="material-icons-outlined text-sm">content_copy</span>コピー</button><pre id="taste-cool" class="!text-xs !py-2 !px-3 !pr-16">この内容をインフォグラフィックにして。テイストはクールで</pre></div>
+    </div>
+
+    <!-- Casual -->
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background:#FFF9F0;">
+          <span class="material-icons-outlined" style="color:#FF6B6B;">mood</span>
+        </div>
+        <div>
+          <h4 class="font-bold">カジュアル / フレンドリー</h4>
+          <p class="text-xs text-slate-500">親しみやすい、ポップ</p>
+        </div>
+      </div>
+      <p class="text-sm text-slate-600 mb-3">クリームホワイト背景にコーラルオレンジ。SNS・一般向けコンテンツに</p>
+      <div class="prompt-box"><button onclick="copyPrompt(this, 'taste-casual')" class="copy-btn absolute top-2 right-2 bg-primary hover:bg-primary-dark text-white px-2 py-1 rounded-lg text-xs font-medium flex items-center gap-1 z-10"><span class="material-icons-outlined text-sm">content_copy</span>コピー</button><pre id="taste-casual" class="!text-xs !py-2 !px-3 !pr-16">この内容をインフォグラフィックにして。テイストはカジュアルで</pre></div>
+    </div>
+
+    <!-- Japanese -->
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background:#FBF6F0;">
+          <span class="material-icons-outlined" style="color:#1B4B82;">spa</span>
+        </div>
+        <div>
+          <h4 class="font-bold">和風 / ジャパニーズモダン</h4>
+          <p class="text-xs text-slate-500">和モダン、粋、洗練</p>
+        </div>
+      </div>
+      <p class="text-sm text-slate-600 mb-3">生成り色背景に藍色のアクセント。日本の伝統と革新の融合</p>
+      <div class="prompt-box"><button onclick="copyPrompt(this, 'taste-japanese')" class="copy-btn absolute top-2 right-2 bg-primary hover:bg-primary-dark text-white px-2 py-1 rounded-lg text-xs font-medium flex items-center gap-1 z-10"><span class="material-icons-outlined text-sm">content_copy</span>コピー</button><pre id="taste-japanese" class="!text-xs !py-2 !px-3 !pr-16">この内容をインフォグラフィックにして。和風で、キーカラーは藍色で</pre></div>
+    </div>
+
+    <!-- Elegant -->
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background:#1A1A1A;">
+          <span class="material-icons-outlined" style="color:#C9A84C;">diamond</span>
+        </div>
+        <div>
+          <h4 class="font-bold">エレガント / ラグジュアリー</h4>
+          <p class="text-xs text-slate-500">洗練、高級、上品</p>
+        </div>
+      </div>
+      <p class="text-sm text-slate-600 mb-3">オフブラック背景にゴールドのアクセント。ハイエンド・プレミアム向け</p>
+      <div class="prompt-box"><button onclick="copyPrompt(this, 'taste-elegant')" class="copy-btn absolute top-2 right-2 bg-primary hover:bg-primary-dark text-white px-2 py-1 rounded-lg text-xs font-medium flex items-center gap-1 z-10"><span class="material-icons-outlined text-sm">content_copy</span>コピー</button><pre id="taste-elegant" class="!text-xs !py-2 !px-3 !pr-16">この内容をインフォグラフィックにして。テイストはエレガントで</pre></div>
+    </div>
+
+    <!-- Natural -->
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background:#FEFCF3;">
+          <span class="material-icons-outlined" style="color:#2D6A4F;">eco</span>
+        </div>
+        <div>
+          <h4 class="font-bold">ナチュラル / オーガニック</h4>
+          <p class="text-xs text-slate-500">自然、穏やか、持続可能</p>
+        </div>
+      </div>
+      <p class="text-sm text-slate-600 mb-3">ウォームホワイト背景にフォレストグリーン。健康・環境向け</p>
+      <div class="prompt-box"><button onclick="copyPrompt(this, 'taste-natural')" class="copy-btn absolute top-2 right-2 bg-primary hover:bg-primary-dark text-white px-2 py-1 rounded-lg text-xs font-medium flex items-center gap-1 z-10"><span class="material-icons-outlined text-sm">content_copy</span>コピー</button><pre id="taste-natural" class="!text-xs !py-2 !px-3 !pr-16">この内容をインフォグラフィックにして。テイストはナチュラルで</pre></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Part 5: Diagram Types -->
+<section class="py-16 bg-lavender/5" id="part-type">
+<div class="max-w-5xl mx-auto px-4 sm:px-6">
+  <div class="text-center mb-10">
+    <span class="bg-secondary/10 text-secondary px-4 py-1 rounded-full text-sm font-bold">Part 5</span>
+    <h2 class="text-2xl font-bold mt-3 mb-2">図解の型一覧</h2>
+    <p class="text-slate-500">プロンプトに「○○型で」と添えると型を指定できます（省略すると自動選択）</p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="material-icons-outlined text-primary">arrow_forward</span>
+        <h4 class="font-bold">フロー型</h4>
+      </div>
+      <p class="text-sm text-slate-600">手順、プロセス、ステップ、時系列</p>
+    </div>
+
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="material-icons-outlined text-primary">compare_arrows</span>
+        <h4 class="font-bold">比較型</h4>
+      </div>
+      <p class="text-sm text-slate-600">A vs B、Before/After、メリットとデメリット</p>
+    </div>
+
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="material-icons-outlined text-primary">format_list_numbered</span>
+        <h4 class="font-bold">リスト型</h4>
+      </div>
+      <p class="text-sm text-slate-600">N選、チェックリスト、ポイントまとめ</p>
+    </div>
+
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="material-icons-outlined text-primary">autorenew</span>
+        <h4 class="font-bold">サイクル型</h4>
+      </div>
+      <p class="text-sm text-slate-600">PDCA、循環プロセス、繰り返し構造</p>
+    </div>
+
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="material-icons-outlined text-primary">change_history</span>
+        <h4 class="font-bold">ピラミッド型</h4>
+      </div>
+      <p class="text-sm text-slate-600">階層、優先度、段階構造、ファネル</p>
+    </div>
+
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="material-icons-outlined text-primary">grid_view</span>
+        <h4 class="font-bold">マトリクス型</h4>
+      </div>
+      <p class="text-sm text-slate-600">2軸で分類、タイプ別診断、ポジショニング</p>
+    </div>
+
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="material-icons-outlined text-primary">hub</span>
+        <h4 class="font-bold">ハブ&スポーク型</h4>
+      </div>
+      <p class="text-sm text-slate-600">中心概念と周辺要素、関係図</p>
+    </div>
+
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="material-icons-outlined text-primary">timeline</span>
+        <h4 class="font-bold">タイムライン型</h4>
+      </div>
+      <p class="text-sm text-slate-600">歴史、ロードマップ、スケジュール</p>
+    </div>
+
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="material-icons-outlined text-primary">account_tree</span>
+        <h4 class="font-bold">構造分解型</h4>
+      </div>
+      <p class="text-sm text-slate-600">全体と部分、組織図、要素分解</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Part 6: Canva Finishing -->
+<section class="py-16 bg-white" id="part-canva">
+<div class="max-w-5xl mx-auto px-4 sm:px-6">
+  <div class="text-center mb-10">
+    <span class="bg-secondary/10 text-secondary px-4 py-1 rounded-full text-sm font-bold">Part 6</span>
+    <h2 class="text-2xl font-bold mt-3 mb-2">Canvaで仕上げる</h2>
+    <p class="text-slate-500">NotebookLMで作った図解を、Canvaでプロ品質に磨き上げる</p>
+  </div>
+
+  <!-- Magic Layers -->
+  <div class="mb-10">
+    <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+      <span class="material-icons-outlined text-secondary">layers</span>
+      マジックレイヤーで図解を分解する
+    </h3>
+    <div class="space-y-4">
+      <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="bg-secondary text-white w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold">1</span>
+          <h4 class="font-bold">保存したPNG画像をCanvaにアップロード</h4>
+        </div>
+        <p class="text-slate-600 text-sm ml-10">NotebookLMで生成した図解をPNGで保存しておく</p>
+      </div>
+
+      <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="bg-secondary text-white w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold">2</span>
+          <h4 class="font-bold">画像を選択 → 編集 → Magic Layers</h4>
+        </div>
+        <p class="text-slate-600 text-sm ml-10">編集ツールバーから「Magic Layers」をクリック</p>
+      </div>
+
+      <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="bg-secondary text-white w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold">3</span>
+          <h4 class="font-bold">レイヤー分解 → 個別編集</h4>
+        </div>
+        <p class="text-slate-600 text-sm ml-10">1枚の画像がバラバラに。要素の移動・削除・色変更・テキスト差し替えが自在に</p>
+      </div>
+    </div>
+
+    <!-- Warning -->
+    <div class="mt-4 bg-accent/10 border-2 border-accent rounded-2xl p-5">
+      <h4 class="font-bold text-sm mb-2 flex items-center gap-2">
+        <span class="material-icons-outlined text-yellow-600">info</span>
+        注意点
+      </h4>
+      <ul class="space-y-1 text-sm text-slate-700">
+        <li class="flex items-start gap-2">
+          <span class="material-icons-outlined text-yellow-600 text-base mt-0.5">arrow_right</span>
+          <span><strong>PNG/JPGのみ対応</strong>（PDFはまず画像に変換が必要）</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="material-icons-outlined text-yellow-600 text-base mt-0.5">arrow_right</span>
+          <span><strong>シンプルなデザインほどきれいに分離</strong> → だから設計図でシンプルにしておく意味がある</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="material-icons-outlined text-yellow-600 text-base mt-0.5">arrow_right</span>
+          <span>無料ユーザーはAIクレジット制限あり（Canva Proは月500クレジット）</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Magic Eraser -->
+  <div>
+    <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+      <span class="material-icons-outlined text-secondary">auto_fix_high</span>
+      マジック消しゴムでロゴ除去
+    </h3>
+    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+      <div class="space-y-3 text-sm text-slate-600">
+        <p class="flex items-start gap-2">
+          <span class="material-icons-outlined text-primary text-base mt-0.5">arrow_right</span>
+          <span>画像を選択 → 編集 → 「マジック消しゴム」</span>
+        </p>
+        <p class="flex items-start gap-2">
+          <span class="material-icons-outlined text-primary text-base mt-0.5">arrow_right</span>
+          <span>NotebookLMのロゴ部分をサッとなぞる → 背景に馴染んできれいに消える</span>
+        </p>
+        <p class="flex items-start gap-2">
+          <span class="material-icons-outlined text-secondary text-base mt-0.5">lightbulb</span>
+          <span class="font-bold">クライアントに出す資料では必須テクニックです</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Distribution Data Section -->
+<section class="py-16 bg-background-dark text-white" id="data">
+<div class="max-w-5xl mx-auto px-4 sm:px-6">
+  <div class="text-center mb-10">
+    <span class="bg-primary text-white px-4 py-1 rounded-full text-sm font-bold">配布データ</span>
+    <h2 class="text-2xl font-bold mt-3 mb-2">持ち帰りファイル</h2>
+    <p class="text-slate-400">新しいノートブックを作るたびに、この2つを入れるだけでデザインコントロールが効きます</p>
+  </div>
+
+  <!-- File 1: source_yaml-design-rules.txt -->
+  <div class="mb-10">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-10 bg-primary/20 text-primary rounded-xl flex items-center justify-center flex-shrink-0">
+        <span class="material-icons-outlined text-xl">description</span>
+      </div>
+      <div class="flex-1">
+        <h3 class="font-bold text-lg">source_yaml-design-rules.txt</h3>
+        <p class="text-sm text-slate-400">NotebookLMに「ソース」として追加するファイル</p>
+      </div>
+      <button onclick="downloadFile('file-source', 'source_yaml-design-rules.txt')" class="copy-btn bg-secondary hover:bg-secondary/90 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-1 flex-shrink-0">
+        <span class="material-icons-outlined text-base">download</span>
+        ダウンロード
+      </button>
+    </div>
+    <div class="prompt-box">
+      <button onclick="copyPrompt(this, 'file-source')" class="copy-btn absolute top-3 right-3 bg-primary hover:bg-primary-dark text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1 z-10">
+        <span class="material-icons-outlined text-base">content_copy</span>
+        コピー
+      </button>
+      <pre id="file-source"># 図解デザインYAML設計ルール
+
+このドキュメントは、NotebookLMのインフォグラフィック生成において
+「カスタマイズ」欄に貼り付けるYAML形式のデザインプロンプトを
+生成するための設計ルールです。
+
+---
+
+## 図解の型（パターン辞書）
+
+ソースの内容に応じて、以下から最適な型を選択すること。
+
+### フロー型
+- 用途: 手順、プロセス、ステップ、時系列
+- レイアウト: 横並びの矢印接続、またはナンバリング付き縦ステップ
+- 特徴: 各ステップをボックスで囲み、矢印やラインで接続する
+
+### 比較型
+- 用途: A vs B、Before/After、メリットとデメリット
+- レイアウト: 左右2列の対比レイアウト
+- 特徴: 中央に比較軸ラベルを置き、左右で対称的に配置する
+
+### リスト型
+- 用途: N選、チェックリスト、ポイントまとめ
+- レイアウト: 2列グリッドまたは縦リスト
+- 特徴: ナンバリング付きカードを均等配置する
+
+### サイクル型
+- 用途: PDCA、循環プロセス、繰り返し構造
+- レイアウト: 円環レイアウト
+- 特徴: 要素を円形に配置し、矢印で循環を示す
+
+### ピラミッド型
+- 用途: 階層、優先度、段階構造、ファネル
+- レイアウト: 三角形の段構成
+- 特徴: 上が少なく下が広い（または逆）階層表現
+
+### マトリクス型
+- 用途: 2軸で分類、タイプ別診断、ポジショニング
+- レイアウト: 4象限グリッド
+- 特徴: 縦横の軸ラベルを明示し、各象限にカードを配置
+
+### ハブ&スポーク型
+- 用途: 中心概念と周辺要素、関係図
+- レイアウト: 中央に核となる要素、周囲に放射状に関連要素を配置
+- 特徴: ラインで接続する
+
+### タイムライン型
+- 用途: 歴史、ロードマップ、スケジュール
+- レイアウト: 横軸または縦軸の時系列
+- 特徴: ポイントを等間隔に配置し、線で接続
+
+### 構造分解型
+- 用途: 全体と部分、組織図、要素分解
+- レイアウト: ツリー構造
+- 特徴: 上位から下位へ分岐するレイアウト
+
+---
+
+## デフォルトデザイン（「ザ、図解！」スタイル）
+
+特に指定がない場合、以下をデフォルトとして適用する。
+ビジネス資料に混ぜても浮かない、クリーンでプロフェッショナルなデザイン。
+
+- 背景色: ピュアホワイト (#FFFFFF)
+- ボックスやカード: ライトグレー (#E6E7EA)、角丸
+- メインカラー（アイコン、ライン、強調テキスト）: ビジネスブルー (#0571DD)
+- 文字色: ダークグレー (#333333)
+- アイコン: Google Material Iconsのようなフラットでシンプルな線画アイコン。かわいくしない、装飾的にしない
+- フォント: モダンなゴシック体またはサンセリフ体。見出しは太め、本文は標準ウェイト
+- 余白: 要素同士の間に十分な余白を確保。過密にしない
+- 装飾: グラデーション、ドロップシャドウ、背景画像は一切使用しない
+- ナンバリング: メインカラーの丸に白抜き数字
+- 区切り: 細い罫線または点線
+- 画面比率: 16:9
+
+---
+
+## YAML出力フォーマット
+
+以下の構造でYAMLを出力すること。
+このYAMLはNotebookLMのインフォグラフィック「カスタマイズ」欄に
+そのまま貼り付けて使用する。
+
+```
+全体デザイン設定:
+  トーン: "（図解の雰囲気を3〜5語で記述）"
+  図解の型: "（上記パターン辞書から選択した型名）"
+  レイアウト:
+    構成: "（具体的な配置の説明）"
+    画面比率: "16:9"
+    余白: "要素間に十分な余白を確保。過密にしない"
+  ビジュアル・アイデンティティ:
+    背景色: "（色名とカラーコード）"
+    ボックス/カード: "（色名とカラーコード）、角丸"
+    文字色: "（色名とカラーコード）"
+    メインカラー: "（色名とカラーコード）- アイコン、ライン、強調テキストに使用"
+    画像スタイル:
+      アイコン: "Google Material Iconsのようなフラットな線画アイコン"
+      装飾: "グラデーション、シャドウ、背景画像は使用しない"
+      区切り線: "細い罫線または点線"
+      ナンバリング: "メインカラーの丸に白抜き数字"
+  タイポグラフィ:
+    見出し: "太めのサンセリフ体（ゴシック体）"
+    本文: "標準ウェイトのサンセリフ体。可読性最優先"
+    数字: "見出しと同系統のフォント。大きく目立たせる"
+```
+
+---
+
+## テイストカスタマイズ
+
+ユーザーがテイスト（雰囲気）を指定した場合は、
+YAMLの「トーン」と全体の配色・質感をそのテイストに合わせること。
+
+### テイスト例
+
+#### クール / テック系
+- トーン: "先進的、クール、テクニカル、信頼"
+- 背景色: ダークネイビー (#0A1628) または ピュアホワイト (#FFFFFF)
+- メインカラー: シアン (#00D4FF) またはエレクトリックブルー (#0066FF)
+- アイコン: 回路基板、コード、ネットワーク、データフローをモチーフにしたフラットアイコン
+
+#### カジュアル / フレンドリー
+- トーン: "親しみやすい、ポップ、明るい、楽しい"
+- 背景色: クリームホワイト (#FFF9F0) またはペールミント (#F0FFF4)
+- メインカラー: コーラルオレンジ (#FF6B6B) またはライムグリーン (#34C759)
+- アイコン: 丸みのあるフレンドリーなフラットアイコン。角は大きめの角丸
+
+#### 和風 / ジャパニーズモダン
+- トーン: "和モダン、粋、洗練、伝統と革新"
+- 背景色: 生成り色 (#FBF6F0) または墨白 (#F5F5F0)
+- メインカラー: 藍色 (#1B4B82) または弁柄色 (#8E352E)
+- アイコン: 最小限の線画で日本的なモチーフを取り入れる
+
+#### エレガント / ラグジュアリー
+- トーン: "洗練、高級、上品、プレミアム"
+- 背景色: オフブラック (#1A1A1A) またはアイボリー (#FFFFF0)
+- メインカラー: ゴールド (#C9A84C) またはディープバーガンディ (#6B2D4E)
+- フォント: セリフ体を見出しに使用。細く上品なウェイト
+
+#### ナチュラル / オーガニック
+- トーン: "自然、穏やか、持続可能、オーガニック"
+- 背景色: ウォームホワイト (#FEFCF3) またはサンドベージュ (#F5F0E8)
+- メインカラー: フォレストグリーン (#2D6A4F) またはテラコッタ (#C56B4A)
+- アイコン: 葉、木、水滴などの自然モチーフを取り入れたフラットアイコン
+
+---
+
+## カラーカスタマイズ
+
+ユーザーがキーカラーを指定した場合は、YAMLのメインカラーをその色に変更すること。
+指定がなければデフォルトのビジネスブルー (#0571DD) を使用する。
+
+メインカラーに合わせて以下も調整すること。
+- アクセントカラー: メインカラーの補色や類似色から選ぶ
+- ボックス/カード: メインカラーの極薄い版（10%透明度相当）も選択肢
+- ナンバリング: 指定されたメインカラーの丸に白抜き数字
+
+### よく使われるカラー例
+- 赤系: #E63946（情熱、注意喚起）
+- オレンジ系: #FF6B00（活力、親しみ）
+- 緑系: #2D9D5D（成長、安心）
+- 紫系: #7C3AED（創造性、プレミアム）
+- ピンク系: #FF5757（華やか、女性向け）
+- ティール系: #0D9488（信頼、ヘルスケア）
+
+---
+
+## 重要なルール
+
+- YAMLは毎回「全文」を出力する。差分だけ見せない
+- デザインの説明は最小限にして、YAML本体をメインにする
+- 「かわいい」「やさしい」雰囲気にしない。ビジネスで使えるクリーンさを保つ
+- ユーザーが色やトーンを指定した場合はそれを優先し、指定のない部分はデフォルトを適用する</pre>
+    </div>
+  </div>
+
+  <!-- File 2: chat-custom-instruction.txt -->
+  <div>
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-10 bg-secondary/20 text-secondary rounded-xl flex items-center justify-center flex-shrink-0">
+        <span class="material-icons-outlined text-xl">settings</span>
+      </div>
+      <div class="flex-1">
+        <h3 class="font-bold text-lg">chat-custom-instruction.txt</h3>
+        <p class="text-sm text-slate-400">NotebookLMの「チャットのカスタム指示」に貼るテキスト</p>
+      </div>
+      <button onclick="downloadFile('file-instruction', 'chat-custom-instruction.txt')" class="copy-btn bg-secondary hover:bg-secondary/90 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-1 flex-shrink-0">
+        <span class="material-icons-outlined text-base">download</span>
+        ダウンロード
+      </button>
+    </div>
+    <div class="prompt-box">
+      <button onclick="copyPrompt(this, 'file-instruction')" class="copy-btn absolute top-3 right-3 bg-primary hover:bg-primary-dark text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1 z-10">
+        <span class="material-icons-outlined text-base">content_copy</span>
+        コピー
+      </button>
+      <pre id="file-instruction">ソースの内容をインフォグラフィックにしたいときは、「図解デザインYAML設計ルール」のソースに書かれたYAMLフォーマットに従って、内容に最適なデザインプロンプトをYAML形式で出力してください。図解の型（フロー型、比較型、リスト型、サイクル型、ピラミッド型、マトリクス型、ハブ&スポーク型、タイムライン型、構造分解型）から最適なものを自動で選び、選んだ理由を1行で添えてください。ユーザーがテイスト（クール、カジュアル、和風、テック系など）やキーカラー（#FF5757など）を指定した場合は、YAMLのトーン・メインカラー・アクセントカラーに反映してください。指定がなければデフォルトのビジネスブルー（#0571DD）を使ってください。出力されたYAMLはインフォグラフィックのカスタマイズ欄にそのまま貼り付けて使います。</pre>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Takeaway Tools -->
+<section class="py-16 bg-white">
+<div class="max-w-5xl mx-auto px-4 sm:px-6">
+  <div class="text-center mb-10">
+    <h2 class="text-2xl font-bold mb-3">使いこなしのコツ</h2>
+    <p class="text-slate-500">今日のセットアップを、明日から使い倒すために</p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-3xl mx-auto">
+    <div class="bg-primary/5 rounded-2xl p-6 border border-primary/20 flex items-center gap-4">
+      <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center flex-shrink-0">
+        <span class="material-icons-outlined text-2xl">add_circle</span>
+      </div>
+      <div>
+        <h4 class="font-bold text-sm">テイストは自分で追加OK</h4>
+        <p class="text-xs text-slate-500">ソースファイルにテイスト例を追記するだけ</p>
+      </div>
+    </div>
+
+    <div class="bg-primary/5 rounded-2xl p-6 border border-primary/20 flex items-center gap-4">
+      <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center flex-shrink-0">
+        <span class="material-icons-outlined text-2xl">business</span>
+      </div>
+      <div>
+        <h4 class="font-bold text-sm">ブランドガイドライン追加</h4>
+        <p class="text-xs text-slate-500">企業のガイドラインをソースに追加すると精度UP</p>
+      </div>
+    </div>
+
+    <div class="bg-primary/5 rounded-2xl p-6 border border-primary/20 flex items-center gap-4">
+      <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center flex-shrink-0">
+        <span class="material-icons-outlined text-2xl">repeat</span>
+      </div>
+      <div>
+        <h4 class="font-bold text-sm">毎回のセットアップは2つだけ</h4>
+        <p class="text-xs text-slate-500">新しいノートブックに設計ルール + カスタム指示を入れるだけ</p>
+      </div>
+    </div>
+
+    <div class="bg-secondary/5 rounded-2xl p-6 border border-secondary/20 flex items-center gap-4">
+      <div class="w-12 h-12 bg-secondary/10 text-secondary rounded-xl flex items-center justify-center flex-shrink-0">
+        <span class="material-icons-outlined text-2xl">extension</span>
+      </div>
+      <div>
+        <h4 class="font-bold text-sm">BananaNL拡張機能</h4>
+        <p class="text-xs text-slate-500">デザインスタイルの管理がさらに楽になる</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Summary Section -->
+<section class="py-16 hero-gradient text-white">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+  <h2 class="text-2xl md:text-3xl font-bold mb-8">今日できるようになったこと</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-8">
+    <div class="bg-white/20 backdrop-blur rounded-xl p-5 flex items-center gap-3">
+      <span class="material-icons-outlined text-3xl flex-shrink-0">description</span>
+      <p class="font-bold text-sm text-left">「設計図」を入れるだけでAIの出力が劇的に変わる</p>
+    </div>
+    <div class="bg-white/20 backdrop-blur rounded-xl p-5 flex items-center gap-3">
+      <span class="material-icons-outlined text-3xl flex-shrink-0">chat</span>
+      <p class="font-bold text-sm text-left">チャットで1行指示するだけでプロ品質の図解が出る</p>
+    </div>
+    <div class="bg-white/20 backdrop-blur rounded-xl p-5 flex items-center gap-3">
+      <span class="material-icons-outlined text-3xl flex-shrink-0">palette</span>
+      <p class="font-bold text-sm text-left">テイスト・カラー・型を自由にコントロール</p>
+    </div>
+    <div class="bg-white/20 backdrop-blur rounded-xl p-5 flex items-center gap-3">
+      <span class="material-icons-outlined text-3xl flex-shrink-0">layers</span>
+      <p class="font-bold text-sm text-left">Canvaのマジックレイヤーで個別編集まで</p>
+    </div>
+  </div>
+
+  <div class="bg-white/10 rounded-xl p-6 inline-block">
+    <p class="text-lg">
+      <span class="line-through opacity-70">ごちゃっとしたAI図解で使えない</span>
+      <span class="mx-3">→</span>
+      <span class="font-bold">設計図1つで「ザ、図解！」を15分で量産</span>
+    </p>
+  </div>
+</div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-white py-8 border-t border-slate-200">
+<div class="max-w-5xl mx-auto px-4 sm:px-6">
+  <div class="flex flex-col md:flex-row justify-between items-center">
+    <div class="flex items-center space-x-2 mb-4 md:mb-0">
+      <span class="material-icons-outlined text-primary">auto_awesome</span>
+      <span class="font-bold">Canva AI ハンズオンセミナー 第3回</span>
+    </div>
+    <div class="text-slate-500 text-sm">
+      配布資料 | 2026年3月
+    </div>
+  </div>
+</div>
+</footer>
+
+<script>
+function copyPrompt(button, promptId) {
+  const promptElement = document.getElementById(promptId);
+  const text = promptElement.innerText;
+
+  navigator.clipboard.writeText(text).then(() => {
+    button.classList.add('copied');
+    button.innerHTML = '<span class="material-icons-outlined text-base">check</span> コピー完了';
+
+    setTimeout(() => {
+      button.classList.remove('copied');
+      button.innerHTML = '<span class="material-icons-outlined text-base">content_copy</span> コピー';
+    }, 2000);
+  }).catch(err => {
+    console.error('コピーに失敗:', err);
+    alert('コピーに失敗しました');
+  });
+}
+
+function downloadFile(elementId, filename) {
+  const el = document.getElementById(elementId);
+  const text = el.innerText;
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>
